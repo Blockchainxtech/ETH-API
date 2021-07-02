@@ -1,0 +1,5 @@
+PORT=3000
+ROPSTEN=https://ropsten.infura.io/v3/INFURA_ID
+MAINNET=https://mainnet.infura.io/v3/INFURA_ID
+RINKEBY=https://rinkeby.infura.io/v3/INFURA_ID
+CONTRACT_ADDRESS=ENTER_CONTRACT_ADDRESS
