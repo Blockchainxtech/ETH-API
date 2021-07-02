@@ -10,6 +10,7 @@
 ### Changes to be done in code - 
 - Create .env file and use env_example file
     - CONTRACT_ADDRESS - set the contract address
+    - Replace INFURA_ID
 - In abi.json file add the abi of the contract
 
 ### To install dependencies - 
