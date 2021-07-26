@@ -102,7 +102,7 @@ async function transferToken(req, res) {
         const contract = await new web3.eth.Contract(abi, process.env.CONTRACT_ADDRESS);
         const decimals = await contract.methods.decimals().call();
         // transfer event abi
-        const transferAbi = await contract.methods.transfer(req.body.to, (req.body.amount * 10**decimals).toString()).encodeABI();
+        const transferAbi = await contract.methods.transfer(req.body.to, toFixed(req.body.amount * Math.pow(10, parseInt(decimals || 18)))).encodeABI();
 
         // Sign transaction
         let signTransaction = await web3.eth.accounts.signTransaction({
@@ -121,6 +121,24 @@ async function transferToken(req, res) {
         console.log(error)
         res.status(500).send({ status: false, message: 'Transfer Failed' });
     }
+}
+
+function toFixed(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split("e-")[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      x = "0." + new Array(e).join("0") + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split("+")[1]);
+    if (e > 20) {
+      e -= 20;
+      x /= Math.pow(10, e);
+      x += new Array(e + 1).join("0");
+    }
+  }
+  return String(x);
 }
 
 module.exports = {createAccount, getBalance, getTokenBalance, transfer, transferToken}
